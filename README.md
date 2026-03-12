@@ -24,22 +24,24 @@ A small Flutter test task that implements an order creation flow using a REST AP
   - retry after failure
 
 ## Project Structure
+
+```
 lib/
 ├── data/
-│ └── order_api.dart
+│   └── order_api.dart
 ├── models/
-│ └── order.dart
+│   └── order.dart
 ├── controllers/
-│ └── order_controller.dart
+│   └── order_controller.dart
 ├── exceptions/
-│ └── api_exception.dart
+│   └── api_exception.dart
 └── ui/
-└── create_order_screen.dart
-
-
+    └── create_order_screen.dart
+```
 
 ## Running the Project
 
-```bash
+```
 flutter pub get
 flutter run
+```
