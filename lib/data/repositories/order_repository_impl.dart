@@ -13,9 +13,6 @@ class OrderRepositoryImpl implements OrderRepository {
   @override
   Future<Order> createOrder(int userId, int serviceId) async {
     try {
-      // temporary test delay to observe loading UI.
-      // await Future.delayed(const Duration(seconds: 2));
-
       final response = await remoteDataSource
           .createOrder({'userId': userId, 'serviceId': serviceId})
           .timeout(const Duration(seconds: 10));
@@ -32,17 +29,25 @@ class OrderRepositoryImpl implements OrderRepository {
         throw ApiException('Request timeout');
       } else if (e.type == DioExceptionType.connectionError) {
         throw ApiException('No internet connection');
-      } else if (e.response != null && (e.response!.statusCode ?? 0) >= 400) {
-        final data = e.response!.data;
-        final message = (data is Map<String, dynamic>) ? data['message'] : null;
-        throw ApiException(
-          (message is String && message.isNotEmpty)
-              ? message
-              : 'Request failed',
-        );
-      } else {
-        throw ApiException('Unknown error occurred');
+      } else if (e.response != null) {
+        final statusCode = e.response!.statusCode ?? 0;
+
+        if (statusCode >= 400) {
+          final data = e.response!.data;
+          final backendMessage =
+              (data is Map<String, dynamic>) ? data['message'] : null;
+
+          final message =
+              (backendMessage is String && backendMessage.isNotEmpty)
+                  ? backendMessage
+                  : statusCode >= 500
+                      ? 'Server error, please try again later'
+                      : 'Request failed';
+
+          throw ApiException(message);
+        }
       }
+      throw ApiException('Unknown error occurred');
     } catch (e) {
       throw ApiException('Unknown error occurred');
     }

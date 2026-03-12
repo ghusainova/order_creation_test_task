@@ -23,10 +23,7 @@ void setupDependencies() {
 
   // Data sources
   sl.registerLazySingleton<OrderRemoteDataSource>(
-    () => OrderRemoteDataSource(
-      sl<Dio>(),
-      baseUrl: sl<Dio>().options.baseUrl,
-    ),
+    () => OrderRemoteDataSource(sl<Dio>(), baseUrl: sl<Dio>().options.baseUrl),
   );
 
   // Repositories
@@ -35,13 +32,8 @@ void setupDependencies() {
   );
 
   // Use cases
-  sl.registerFactory<CreateOrder>(
-    () => CreateOrder(sl<OrderRepository>()),
-  );
+  sl.registerFactory<CreateOrder>(() => CreateOrder(sl<OrderRepository>()));
 
-  // Controllers
-  sl.registerFactory<OrderController>(
-    () => OrderController(sl<CreateOrder>()),
-  );
+  // Cubits
+  sl.registerFactory<OrderController>(() => OrderController(sl<CreateOrder>()));
 }
-

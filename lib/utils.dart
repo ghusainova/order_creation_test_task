@@ -1,5 +1,3 @@
-// Utility functions for the app
-
 int doubleValue(int value) {
   return value * 2;
 }

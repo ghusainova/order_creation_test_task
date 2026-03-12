@@ -2,22 +2,22 @@ import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/order.dart';
 
-abstract class OrderControllerState extends Equatable {
-  const OrderControllerState();
+abstract class OrderState extends Equatable {
+  const OrderState();
 
   @override
   List<Object?> get props => [];
 }
 
-class OrderInitial extends OrderControllerState {
+class OrderInitial extends OrderState {
   const OrderInitial();
 }
 
-class OrderLoading extends OrderControllerState {
+class OrderLoading extends OrderState {
   const OrderLoading();
 }
 
-class OrderSuccess extends OrderControllerState {
+class OrderSuccess extends OrderState {
   final Order order;
 
   const OrderSuccess(this.order);
@@ -26,7 +26,7 @@ class OrderSuccess extends OrderControllerState {
   List<Object?> get props => [order];
 }
 
-class OrderError extends OrderControllerState {
+class OrderError extends OrderState {
   final String message;
 
   const OrderError(this.message);

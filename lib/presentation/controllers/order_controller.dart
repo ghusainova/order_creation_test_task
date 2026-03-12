@@ -4,7 +4,7 @@ import '../../core/exceptions/api_exception.dart';
 import '../../domain/usecases/create_order.dart';
 import 'order_controller_state.dart';
 
-class OrderController extends Cubit<OrderControllerState> {
+class OrderController extends Cubit<OrderState> {
   final CreateOrder createOrder;
 
   OrderController(this.createOrder) : super(const OrderInitial());
@@ -21,4 +21,3 @@ class OrderController extends Cubit<OrderControllerState> {
     }
   }
 }
-
